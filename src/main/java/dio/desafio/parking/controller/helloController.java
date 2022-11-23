@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class helloController {
     @GetMapping
-    public String Hello(){return "Ai jojós";}
+    public String Hello(){return "Acesso feito por Ítallo Miranda. Melhor amigo: João Carlos";}
 }
