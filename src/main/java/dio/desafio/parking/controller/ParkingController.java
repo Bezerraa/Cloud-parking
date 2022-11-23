@@ -1,29 +1,34 @@
 package dio.desafio.parking.controller;
 
+import dio.desafio.parking.controller.dto.ParkingDTO;
+import dio.desafio.parking.controller.mapper.ParkingMapper;
 import dio.desafio.parking.model.Parking;
+import dio.desafio.parking.service.ParkingService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/parking")
 public class ParkingController {
+    private final ParkingService parkingService;
+    private final ParkingMapper parkingMapper;
 
-    @GetMapping
-    public List<Parking> findAll() {
-        var carro = new Parking();
-        carro.setColor("PRETO");
-        carro.setLicense("KJR-8929");
-        carro.setModel("vw GOL");
-        carro.setState("PE");
-
-
-        return Arrays.asList(carro);
+    public ParkingController(ParkingService parkingService, ParkingMapper parkingMapper) {
+        this.parkingService = parkingService;
+        this.parkingMapper = parkingMapper;
     }
 
+    @GetMapping
+    public List<ParkingDTO> findAll() {
+        List<Parking> parkingList = parkingService.findAll();
+        List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
+        return result;
+        }
 
 
 }
+
+

@@ -1,8 +1,11 @@
-package dio.desafio.parking.model;
+package dio.desafio.parking.controller.dto;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ParkingDTO {
 
-public class Parking {
     private String id;
     private String license;
     private String state;
@@ -11,18 +14,6 @@ public class Parking {
     private LocalDateTime entryDate;
     private LocalDateTime exitDate;
     private double bill;
-
-    public Parking() {
-
-    }
-
-    public Parking(String id, String license, String state, String model, String color) {
-        this.id = id;
-        this.license = license;
-        this.state = state;
-        this.model = model;
-        this.color = color;
-    }
 
     public String getId() {
         return id;
