@@ -1,8 +1,10 @@
 package dio.desafio.parking.service;
 
+import dio.desafio.parking.exception.ParkingNotFoundException;
 import dio.desafio.parking.model.Parking;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,7 +34,11 @@ public class ParkingService {
     }
 
     public Parking findById(String id) {
-        return parkingMap.get(id);
+        Parking parking = parkingMap.get(id);
+        if (parking == null){throw new ParkingNotFoundException(id);
+
+        }
+        return parking;
     }
 
     public Parking create(Parking parkingcreate) {
@@ -41,5 +47,28 @@ public class ParkingService {
         parkingcreate.setEntryDate(LocalDateTime.now());
         parkingMap.put(uuid, parkingcreate);
         return parkingcreate;
+    }
+
+    public void delete(String id) {
+        Parking parking = findById(id);
+        parkingMap.remove(id);
+    }
+
+    public Parking update(String id, Parking parkingEdited) {
+        Parking outDtParking = findById(id);
+        outDtParking.setColor(parkingEdited.getColor());
+//
+        parkingMap.replace(id, outDtParking); //previously outdated but just updated now
+
+        return outDtParking;
+    }
+
+    public Parking exit(String id) {
+       Parking exitParking = findById(id);
+       exitParking.setExitDate(LocalDateTime.now());
+       Duration duration = Duration.between(exitParking.getEntryDate(), exitParking.getExitDate());
+       double bill = duration.toSeconds();
+       exitParking.setBill(bill*1.5);
+        return exitParking;
     }
 }
