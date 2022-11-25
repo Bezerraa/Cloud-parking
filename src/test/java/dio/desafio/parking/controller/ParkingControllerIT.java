@@ -17,7 +17,7 @@ class ParkingControllerIT extends AbstractContainerBase{
     @LocalServerPort
     private int randomport;
 
-    
+
     @BeforeEach //anotação do Junit -> Para cada teste realizado, esse método será executado
     public void setUpTest(){
         RestAssured.port = randomport;
