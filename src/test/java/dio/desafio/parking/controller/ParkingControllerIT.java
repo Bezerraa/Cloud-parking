@@ -13,10 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 //Porta aleatória para que se houverem outros testes feitos por outros desenvolvedores,
 //que não choquem com as portas.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ParkingControllerIT {
+class ParkingControllerIT extends AbstractContainerBase{
     @LocalServerPort
     private int randomport;
 
+    
     @BeforeEach //anotação do Junit -> Para cada teste realizado, esse método será executado
     public void setUpTest(){
         RestAssured.port = randomport;
